@@ -1,0 +1,1 @@
+ant_areas = [[random.randint(0, areas-1)] for ant in range(ants)]
