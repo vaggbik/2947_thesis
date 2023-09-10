@@ -14,9 +14,9 @@ import math
 #initialization of variables
 ants= 5
 areas= 5
-iterations= 100
-alpha= 1
-beta= 1
+iterations= 10
+alpha= 0.5
+beta= 0.5
 #areas graph
 distance= np.random.randint(1,50,size=(areas,areas))
 #convert to symmetric
@@ -54,6 +54,12 @@ for iteration in range(iterations):
         for i in range(len(ant)-1):
             this_distance += distance[ant[i]][ant[i+1]]
         ant_distances.append(this_distance)
+    
+    #returning each ant to its original area
+    for i in range(len(ant_areas)):
+        ant_distances[i] += distance[ant_areas[i][0]][ant_areas[i][4]]
+        ant_areas[i].append(ant_areas[i][0])
+    
     #the best route of all the chosen ones
     best_route=ant_areas[ant_distances.index(min(ant_distances))]
     best_one_route.append(best_route)
@@ -63,5 +69,4 @@ for iteration in range(iterations):
         for j in range(areas):
             if i!=j:
                 pheromone[i][j] = 0.5*pheromone[i][j]+pheromone_sum[i][j] #evaporation rate=0.5
-print("best route after ", iteration+1, " iterations:", min(best_one_route), "with distance (cost) summation:", min(best_one_distance))
-
+print("\nbest route after ", iteration+1, " iterations:", min(best_one_route), "with distance (cost) summation:", min(best_one_distance),"\n")
